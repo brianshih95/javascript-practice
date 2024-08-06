@@ -739,7 +739,24 @@ export function loadProducts(fun) {
 
     fun();
   });
-
+  
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
+}
+
+export function loadProductsFetch() {
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ) .then(response => {
+    return response.json();
+  }).then(productsData => {
+    products = productsData.map(details => {
+      if (details.type === 'clothing') {
+        return new Clothing(details);
+      }
+      return new Product(details);
+    });
+  });
+
+  return promise;
 }
