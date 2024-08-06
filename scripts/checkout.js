@@ -12,13 +12,18 @@ loadProducts(() => {
 */
 
 async function loadPage() {
-  await loadProductsFetch();
-
-  await new Promise(resolve => {
-    loadCart(() => {
-      resolve();
+  try {
+    await loadProductsFetch();
+  
+    await new Promise((resolve, reject) => {
+      loadCart(() => {
+        // reject('error');
+        resolve();
+      });
     });
-  });
+  } catch (error) {
+    console.log('Unexpected error.');
+  }
 
   renderOrderSummary();
   renderPaymentSummary();

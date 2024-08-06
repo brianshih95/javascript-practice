@@ -739,6 +739,10 @@ export function loadProducts(fun) {
 
     fun();
   });
+
+  xhr.addEventListener('error', error => {
+    console.log('Unexpected error.');
+  });
   
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
@@ -756,6 +760,8 @@ export function loadProductsFetch() {
       }
       return new Product(details);
     });
+  }).catch(error => {
+    console.log('Unexpected error.');
   });
 
   return promise;
